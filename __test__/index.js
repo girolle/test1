@@ -1,9 +1,12 @@
 /*
   0. Проверка неизменности HTML (в лоб, потому что не надо там ничего менять)
-  1. Проверка существования (+ поиск) styleshit с нужным селектором
+  1. Проверка существования + поиск styleshit с нужным селектором
   2. Проверка колличества селекторов в нужном styleshit
   3. Проверка колличества атрибутов селектора
   4. Проверка значения каждого атрибута, в том числе искомого
+
+  !!!Работет только если лежит на сервере или в виртуальном окружении!!!
+    (из-за cssRules)  
 */
 
 const errors = [];
@@ -43,9 +46,9 @@ function check(){
    return(1);
   }
 
-  //  1. Проверка существования (+ поиск) styleshit с нужным селектором
+  //  1. Проверка существования + поиск styleshit с нужным селектором
 
-  function findTheStyleshit(){
+  function findStyleshitIndex(){
     for (let i = 0; i < styles['length']; i +=1 ){  
       for (let j = 0; j < styles[i].cssRules['length']; j += 1) {
         if (styles[i].cssRules[j]['selectorText'] == 'div.content') {
@@ -91,7 +94,7 @@ function check(){
   
     for (let i in attrsReference){
       if (styles[styleshitIndex].cssRules[0]['style'][i] != attrsReference[i]){
-        errors.push('Неправильное значение аттрибута ' + styles[styleshitIndex].cssRules[0]['style'][i]);
+        errors.push('Неправильное значение аттрибута ' + i);
         return (0);
       }
     }
@@ -99,7 +102,7 @@ function check(){
   }
 
   checkHTML();
-  if ((styleshitIndex = findTheStyleshit()) >= 0){
+  if ((styleshitIndex = findStyleshitIndex()) >= 0){
     if (checkNumberOfSelectors()) {
       if (checkNumberOfAttrs()) {
         checkAttrs();
