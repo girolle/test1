@@ -103,11 +103,9 @@ function check(){
 
   checkHTML();
   if ((styleshitIndex = findStyleshitIndex()) >= 0){
-    if (checkNumberOfSelectors()) {
-      if (checkNumberOfAttrs()) {
-        checkAttrs();
-      }
-    }
+    checkNumberOfSelectors();
+    checkNumberOfAttrs();
+    checkAttrs();
   }
 }
 
